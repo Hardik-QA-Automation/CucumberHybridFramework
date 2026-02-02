@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -43,3 +44,4 @@ jobs:
         with:
           name: cucumber-html-report
           path: target/cucumber-reports.html
+
