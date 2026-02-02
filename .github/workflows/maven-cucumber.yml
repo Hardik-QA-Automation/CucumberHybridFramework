@@ -28,16 +28,17 @@ jobs:
 
       # Step 4: Upload Cucumber JSON reports as artifact
       - name: Upload Cucumber JSON Reports
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v6
         with:
           name: cucumber-json
           path: target/cucumber-reports/cucumber.json
 
       # Step 5: Upload Cucumber HTML reports as artifact
       - name: Upload Cucumber HTML Reports
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v6
         with:
           name: cucumber-html
           path: target/cucumber-reports/html
+
 
 
