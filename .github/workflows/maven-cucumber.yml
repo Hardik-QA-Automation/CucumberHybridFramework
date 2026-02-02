@@ -1,49 +1,42 @@
 name: Cucumber Hybrid Framework
 
+# Triggers
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - main
+      - main       # Run workflow on pushes to main
+  workflow_dispatch: # Allows manual triggering from GitHub
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS]  # Use your self-hosted Mac runner
 
     steps:
-      # Step 1: Checkout the repo
-      - name: Checkout repository
+      # Step 1: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Java (match your project's Java version)
-      - name: Set up JDK 17
+      # Step 2: Set up Java (JDK 17, adjust if needed)
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
           java-version: '17'
+          distribution: 'temurin'
 
-      # Step 3: Cache Maven dependencies to speed up builds
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      # Step 4: Build the project and run tests
+      # Step 3: Build project and run tests using Maven
       - name: Build and Run Tests
-        run: mvn clean test -Dtest=runner.TestRunner
+        run: mvn clean test
 
-      # Step 5: Upload Cucumber HTML report as artifact
-      - name: Upload Cucumber Reports
+      # Step 4: Upload Cucumber JSON reports as artifact
+      - name: Upload Cucumber JSON Reports
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: cucumber-reports
-          path: target/cucumber-reports/
+          name: cucumber-json
+          path: target/cucumber-reports/cucumber.json
 
-
-
+      # Step 5: Upload Cucumber HTML reports as artifact
+      - name: Upload Cucumber HTML Reports
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: cucumber-html
+          path: target/cucumber-reports/html
