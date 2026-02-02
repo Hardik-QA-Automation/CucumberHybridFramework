@@ -1,11 +1,10 @@
 name: Cucumber Hybrid Framework
 
-# Triggers
 on:
   push:
     branches:
-      - main       # Run workflow on pushes to main
-  workflow_dispatch: # Allows manual triggering from GitHub
+      - main      
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -14,7 +13,7 @@ jobs:
     steps:
       # Step 1: Checkout repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set up Java (JDK 17, adjust if needed)
       - name: Set up JDK
@@ -29,14 +28,15 @@ jobs:
 
       # Step 4: Upload Cucumber JSON reports as artifact
       - name: Upload Cucumber JSON Reports
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-json
           path: target/cucumber-reports/cucumber.json
 
       # Step 5: Upload Cucumber HTML reports as artifact
       - name: Upload Cucumber HTML Reports
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@4
         with:
           name: cucumber-html
           path: target/cucumber-reports/html
+
