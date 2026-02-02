@@ -1,0 +1,15 @@
+# OS files
+.DS_Store
+
+# Maven / Java build files
+target/
+*.class
+*.jar
+*.log
+
+# Eclipse IDE files
+.classpath
+.project
+.settings/
+
+
