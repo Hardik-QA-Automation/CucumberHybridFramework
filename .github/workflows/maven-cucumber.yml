@@ -39,9 +39,11 @@ jobs:
         run: mvn clean test -Dtest=runner.TestRunner
 
       # Step 5: Upload Cucumber HTML report as artifact
-      - name: Upload Cucumber Report
-        uses: actions/upload-artifact@v3
+      - name: Upload Cucumber Reports
+        uses: actions/upload-artifact@v3.1.2
         with:
-          name: cucumber-html-report
-          path: target/cucumber-reports.html
+          name: cucumber-reports
+          path: target/cucumber-reports/
+
+
 
