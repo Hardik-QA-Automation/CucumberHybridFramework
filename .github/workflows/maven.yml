@@ -8,7 +8,11 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: [self-hosted, macOS]  # Use your self-hosted Mac runner
+    # Use a matrix to run on multiple OSes
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest] # runs on Linux, Windows, Mac
 
     steps:
       # Step 1: Checkout repository
