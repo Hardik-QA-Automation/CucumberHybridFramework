@@ -22,9 +22,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Step 3: Check the target folder for report and if doesn't have then create it automatically
-      - name: Ensure Cucumber report folder exists
-        run: mkdir -p target/cucumber-reports/html
+      # # Step 3: Check the target folder for report and if doesn't have then create it automatically
+      # - name: Ensure Cucumber report folder exists
+      #   run: mkdir -p target/cucumber-reports/html
 
       # Step 4: Build project and run tests using Maven
       - name: Build and Run Tests
@@ -36,6 +36,7 @@ jobs:
         with:
           name: cucumber-json
           path: target/cucumber-reports/cucumber.json
+          if-no-files-found: warn
 
       # Step 5: Upload Cucumber HTML reports as artifact
       - name: Upload Cucumber HTML Reports
@@ -43,7 +44,4 @@ jobs:
         with:
           name: cucumber-html
           path: target/cucumber-reports/html
-
-
-
-
+          if-no-files-found: warn
