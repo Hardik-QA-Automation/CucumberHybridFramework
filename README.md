@@ -1,38 +1,39 @@
-# CucumberHybridFramework
+# Cucumber Hybrid Framework
 
-A **hybrid automation framework** built using **Selenium, Java, Cucumber, Gherkin, and JUnit**, following the **Page Object Model (POM)** design pattern. This framework is designed for automated testing of web applications and supports a modular, scalable, and maintainable structure.
+A hybrid automation framework built using Selenium, Java, Cucumber, Gherkin, and JUnit, following the Page Object Model (POM) design pattern. This framework is designed for automated testing of web applications and supports a modular, scalable, and maintainable structure.
 
 ---
 
 ## Table of Contents
 
-1. Overview
-2. Project Structure
-3. Tech Stack
-4. Installation
-5. How to Run Tests
-6. Features
-7. Framework Details
-8. Contributing
-9. License
+- [Overview](#overview)  
+- [Project Structure](#project-structure)  
+- [Tech Stack](#tech-stack)  
+- [Installation](#installation)  
+- [How to Run Tests](#how-to-run-tests)
+- [CI/CD Workflow](#cicd-workflow) 
+- [Features](#features)  
+- [Framework Details](#framework-details)  
+- [Contributing](#contributing)  
+- [License](#license)  
 
 ---
 
 ## Overview
 
-This project is a **Cucumber-based hybrid automation framework**. It uses **Selenium WebDriver** for browser automation, **Cucumber & Gherkin** for behavior-driven development (BDD), and **JUnit** for test execution.
+This project is a Cucumber-based hybrid automation framework. It uses Selenium WebDriver for browser automation, Cucumber & Gherkin for behavior-driven development (BDD), and JUnit for test execution.  
 
-The framework follows the **Page Object Model (POM)** design pattern, making it easy to maintain and extend.
+The framework follows the Page Object Model (POM) design pattern, making it easy to maintain and extend.  
 
-It includes all necessary packages like:
+### Packages included
 
-* `factory` – for WebDriver initialization
-* `hooks` – for Cucumber Before/After hooks
-* `runner` – for executing test suites
-* `stepDefinitions` – for mapping Gherkin steps to Java code
-* `pages` – Page Object Model classes
-* `utils` – utility/helper classes including configuration files
-* `features` – `.feature` files containing Gherkin scenarios
+- **factory** – for WebDriver initialization  
+- **hooks** – for Cucumber Before/After hooks  
+- **runner** – for executing test suites  
+- **stepDefinitions** – for mapping Gherkin steps to Java code  
+- **pages** – Page Object Model classes  
+- **utils** – utility/helper classes including configuration files  
+- **features** – `.feature` files containing Gherkin scenarios  
 
 ---
 
@@ -55,7 +56,10 @@ CucumberHybridFramework/
 │   └─ features/         # Cucumber feature files (Gherkin syntax)
 │
 ├─ pom.xml               # Maven dependencies
+├─ .github/workflows/    # GitHub Actions YAML for CI/CD
+│   └─ maven.yml
 └─ README.md             # Project documentation
+
 ```
 
 ---
@@ -91,7 +95,7 @@ mvn clean install
 4. **Configure environment settings** (if required) in `utils/config.properties`:
 
 ```
-url=https://example.com
+url=https://tutorialsninja.com/demo/
 browser=chrome
 ```
 
@@ -99,7 +103,7 @@ browser=chrome
 
 ## How to Run Tests
 
-You can run tests using the **JUnit runner** or **Maven command line**.
+You can run tests using the **JUnit runner**, **Maven command line** or **CI/CD Workflow**.
 
 ### 1. Using IDE:
 
@@ -113,25 +117,35 @@ You can run tests using the **JUnit runner** or **Maven command line**.
 mvn test
 ```
 
-### 3. Cucumber Reports:
-
-* Reports are generated in `/target/cucumber-reports/` (optional: use `ExtentReports` for better reporting)
+### 3. Cucumber Reports
+Reports are generated in `target/cucumber-reports/` (optional: use ExtentReports for better reporting).
 
 ---
 
-## Features
+### CI/CD Workflow
 
-* Supports **cross-browser testing**
-* Modular framework with **Page Object Model**
-* **Reusable steps** with Cucumber step definitions
-* Supports **multiple feature files and scenarios**
+A GitHub Actions YAML file (`.github/workflows/cucumber-workflow.yml`) has been created to **automatically run tests and upload Cucumber JSON and HTML reports** as artifacts.
+This workflow:
+1. Sets up Java JDK 17
+2. Runs `mvn clean verify` to execute tests
+3. Generates JSON and HTML Cucumber reports
+4. Uploads reports as artifacts to the workflow
+
+This ensures tests run automatically on every push to the `main` branch or via manual workflow dispatch.
+
+---
+
+### Features
+* Supports cross-browser testing
+* Modular framework with Page Object Model
+* Reusable steps with Cucumber step definitions
+* Supports multiple feature files and scenarios
 * Easy to maintain and extend with new tests
-* **Custom utility methods** for common actions (click, input, waits, etc.)
+* Custom utility methods for common actions (click, input, waits, etc.)
 
----
+--- 
 
-## Framework Details
-
+### Framework Details
 * **factory** – Initializes WebDriver based on browser config
 * **hooks** – Runs before and after each scenario (setup and teardown)
 * **runner** – Executes the feature files using JUnit
@@ -155,3 +169,12 @@ mvn test
 ## License
 
 This project is licensed under the MIT License.
+
+---
+
+If you want, I can also **add badges** for:
+
+- Build status  
+- Test coverage  
+- GitHub Actions workflow run  
+
