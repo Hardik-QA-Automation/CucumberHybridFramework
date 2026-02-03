@@ -9,62 +9,75 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.safari.SafariDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import utils.CommonUtils;
 
 public class DriverFactory {
 
-	static WebDriver driver = null;
+//	private static WebDriver driver;
+	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 	public static WebDriver initializeBrowser(String browserName) {
 		
-		ChromeOptions options = new ChromeOptions();
-		FirefoxOptions firefoxOptions = new FirefoxOptions();
-		EdgeOptions edgeOptions = new EdgeOptions();
+		boolean isCI = System.getenv("CI") != null;
 
-		if (browserName.equals("chrome")) {
-			driver = new ChromeDriver();
-			  // Required for GitHub Linux runners
-	        options.addArguments("--headless=new");        // Run headless
-	        options.addArguments("--no-sandbox");          // Disable sandbox
-	        options.addArguments("--disable-dev-shm-usage");// Avoid limited /dev/shm
-	        options.addArguments("--disable-gpu");         // Disable GPU
-	        options.addArguments("--window-size=1920,1080"); // Set window size
+		if (browserName.equalsIgnoreCase("chrome")) {
 
-		} else if (browserName.equals("firefox")) {
-			driver = new FirefoxDriver();
-            firefoxOptions.addArguments("--headless");           // Headless mode
-            firefoxOptions.addArguments("--window-size=1920,1080");
-            driver = new FirefoxDriver(firefoxOptions);
+			WebDriverManager.chromedriver().setup();
 
-		} else if (browserName.equals("edge")) {
-			driver = new EdgeDriver();
-			edgeOptions.addArguments("--headless=new");         // Headless mode
-            edgeOptions.addArguments("--disable-gpu");
-            edgeOptions.addArguments("--window-size=1920,1080");
-            driver = new EdgeDriver(edgeOptions);
+			ChromeOptions options = new ChromeOptions();
+			if (isCI) {
+				options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+						"--window-size=1920,1080");
+			}
 
-		} else if (browserName.equals("safari")) {
-			driver = new SafariDriver();
+			driver.set(new ChromeDriver(options));
+
+		} else if (browserName.equalsIgnoreCase("firefox")) {
+
+			WebDriverManager.firefoxdriver().setup();
+
+			FirefoxOptions firefoxOptions = new FirefoxOptions();
+			if (isCI) {
+				firefoxOptions.addArguments("--headless");
+				firefoxOptions.addArguments("--width=1920");
+				firefoxOptions.addArguments("--height=1080");
+			}
+
+			driver.set(new FirefoxDriver(firefoxOptions));
+
+		} else if (browserName.equalsIgnoreCase("edge")) {
+
+			WebDriverManager.edgedriver().setup();
+			EdgeOptions edgeOptions = new EdgeOptions();
+			if (isCI) {
+
+				edgeOptions.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
+			}
+
+			driver.set(new EdgeDriver(edgeOptions));
+
+		} else {
+			throw new IllegalArgumentException("Browser not supported: " + browserName);
 		}
 
-        
+		driver.get().manage().deleteAllCookies();
+		driver.get().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(CommonUtils.PAGE_LOAD_TIME));
+		driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(CommonUtils.IMPLICIT_WAIT_TIME));
 
-      
-
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(CommonUtils.PAGE_LOAD_TIME));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(CommonUtils.IMPLICIT_WAIT_TIME));
-
-		return driver;
-
+		return driver.get();
 	}
 
 	public static WebDriver getDriver() {
-
-		return driver;
+		return driver.get();
 	}
 
+	// Quit and remove driver from ThreadLocal
+	public static void quitDriver() {
+		if (driver.get() != null) {
+			driver.get().quit();
+			driver.remove(); // important!
+		}
+	}
 }
