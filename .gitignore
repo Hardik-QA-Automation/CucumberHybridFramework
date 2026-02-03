@@ -1,3 +1,7 @@
+# Surefire test reports (optional)
+surefire-reports/
+failsafe-reports/
+
 # Ignore Maven build folder
 target/
 
