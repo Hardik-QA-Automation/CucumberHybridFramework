@@ -14,36 +14,41 @@ import utils.ConfigReader;
 
 public class MyHooks {
 
-	WebDriver driver;
+    private WebDriver driver;
 
-	@Before
-	public void setup() {
+    @Before
+    public void setup() {
+        // Load configuration
+        Properties prop = new ConfigReader().initializeProperties();
+        String browser = prop.getProperty("browser");
+        String url = prop.getProperty("url");
 
-		Properties prop = new ConfigReader().initializeProperties();
-		driver = DriverFactory.initializeBrowser(prop.getProperty("browser"));
+        // Initialize WebDriver using DriverFactory
+        driver = DriverFactory.initializeBrowser(browser);
 
-		if (driver == null) {
-			throw new RuntimeException("WebDriver initialization failed");
-		}
+        if (driver == null) {
+            throw new RuntimeException("WebDriver initialization failed for browser: " + browser);
+        }
 
-		driver.get(prop.getProperty("url"));
-	}
+        // Navigate to the application URL
+        driver.get(url);
+    }
+
     @After
     public void tearDown(Scenario scenario) {
-        // Get driver from DriverFactory
-        WebDriver driver = DriverFactory.getDriver();
+        driver = DriverFactory.getDriver(); // always get the current driver
 
         if (driver != null) {
             try {
-                // Attach screenshot if scenario failed
+                // Capture screenshot if the scenario failed
                 if (scenario.isFailed()) {
                     byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                    scenario.attach(screenshot, "image/png", scenario.getName());
+                    scenario.attach(screenshot, "image/png", scenario.getName().replaceAll(" ", "_"));
                 }
             } catch (Exception e) {
                 System.out.println("Failed to capture screenshot: " + e.getMessage());
             } finally {
-                // Quit driver safely
+                // Quit and clean up driver
                 DriverFactory.quitDriver();
             }
         }
