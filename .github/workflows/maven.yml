@@ -3,45 +3,51 @@ name: Cucumber Hybrid Framework
 on:
   push:
     branches:
-      - main      
+      - main
   workflow_dispatch:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest  # runs on Linux, Windows, Mac
+    runs-on: ubuntu-latest
 
     steps:
       # Step 1: Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Java (JDK 17, adjust if needed)
+      # Step 2: Set up Java (JDK 17)
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # # Step 3: Check the target folder for report and if doesn't have then create it automatically
-      # - name: Ensure Cucumber report folder exists
-      #   run: mkdir -p target/cucumber-reports/html
-
-      # Step 4: Build project and run tests using Maven
+      # Step 3: Build project and run tests using Maven
       - name: Build and Run Tests
-        run: mvn clean test
+        run: mvn clean verify
 
-      # Step 4: Upload Cucumber JSON reports as artifact
-      - name: Upload Cucumber JSON Reports
+      # Step 4: Debug - List generated reports
+      - name: List generated reports
+        run: ls -R target/cucumber-reports
+
+      # Step 5: Upload Cucumber JSON report
+      - name: Upload Cucumber JSON Report
         uses: actions/upload-artifact@v6
         with:
           name: cucumber-json
           path: target/cucumber-reports/cucumber.json
           if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
 
-      # Step 5: Upload Cucumber HTML reports as artifact
-      - name: Upload Cucumber HTML Reports
+      # Step 6: Upload Cucumber HTML report
+      - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v6
         with:
           name: cucumber-html
           path: target/cucumber-reports/html
           if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
