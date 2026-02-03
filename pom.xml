@@ -97,13 +97,13 @@
                 <version>5.7.0</version>
                 <executions>
                     <execution>
-                        <id>generate-cucumber-html</id>
+                        <id>generate-cucumber-report</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>TutorialsNinjaProj</projectName>
+                            <projectName>CucumberHybridFramework</projectName>
                             <outputDirectory>${project.build.directory}/cucumber-reports/html</outputDirectory>
                             <jsonFiles>
                                 <param>${project.build.directory}/cucumber-reports/cucumber.json</param>
