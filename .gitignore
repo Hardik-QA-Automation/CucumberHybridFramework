@@ -1,3 +1,14 @@
+# Ignore Maven build folder
+target/
+
+# Ignore GitHub Actions self-hosted runner folder
+actions-runner/
+
+# Optional: IDE files
+*.iml
+.idea/
+*.log
+
 # OS files
 .DS_Store
 

@@ -4,6 +4,7 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -28,6 +29,15 @@ public class DriverFactory {
 		} else if (browserName.equals("safari")) {
 			driver = new SafariDriver();
 		}
+
+        ChromeOptions options = new ChromeOptions();
+
+        // Required for GitHub Linux runners
+        options.addArguments("--headless=new");        // Run headless
+        options.addArguments("--no-sandbox");          // Disable sandbox
+        options.addArguments("--disable-dev-shm-usage");// Avoid limited /dev/shm
+        options.addArguments("--disable-gpu");         // Disable GPU
+        options.addArguments("--window-size=1920,1080"); // Set window size
 
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
