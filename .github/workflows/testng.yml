@@ -24,7 +24,7 @@ jobs:
 
       # Step 3: Build project and run tests using Maven
       - name: Build and Run Tests
-        run: mvn clean test
+        run: mvn clean verify
 
       # Step 4: Debug - List generated reports
       - name: List generated reports
@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-json
-          path: target/cucumber-reports/Cucumber.json
+          path: target/Cucumber.json
           if-no-files-found: warn
           compression-level: 6
           overwrite: false
@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html
-          path: target/cucumber-reports/
+          path: target/cucumber-reports
           if-no-files-found: warn
           compression-level: 6
           overwrite: false

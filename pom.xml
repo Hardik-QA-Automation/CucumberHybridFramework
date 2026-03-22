@@ -89,16 +89,16 @@
 				<executions>
 					<execution>
 						<id>generate-report</id>
-						<phase>test</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<projectName>TutorialsNinjaProj</projectName>
 							<outputDirectory>
-								target/cucumber-reports</outputDirectory>
+								${project.build.directory}/cucumber-reports</outputDirectory>
 							<jsonFiles>
-								<param>target/cucumber-reports/Cucumber.json</param>
+								<param>${project.build.directory}/Cucumber.json</param>
 							</jsonFiles>
 						</configuration>
 					</execution>
