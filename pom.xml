@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-testng</artifactId>
-			<version>7.15.0</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -89,16 +89,16 @@
 				<executions>
 					<execution>
 						<id>generate-report</id>
-						<phase>verify</phase>
+						<phase>test</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<projectName>TutorialsNinjaProj</projectName>
 							<outputDirectory>
-								${project.build.directory}/cucumber-reports</outputDirectory>
+								target/cucumber-reports</outputDirectory>
 							<jsonFiles>
-								<param>${project.build.directory}/cucumber.json</param>
+								<param>target/cucumber-reports/Cucumber.json</param>
 							</jsonFiles>
 						</configuration>
 					</execution>

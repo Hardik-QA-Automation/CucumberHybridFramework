@@ -9,8 +9,8 @@ import org.testng.annotations.DataProvider;
         glue = {"stepDefinitions", "hooks"},
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports.html",
-                "json:target/cucumber.json"
+                "json:target/cucumber-reports/Cucumber.json",
+                "html:target/cucumber-reports/report.html"
         },
         monochrome = true
 )
