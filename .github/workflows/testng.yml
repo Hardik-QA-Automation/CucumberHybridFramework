@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-json
-          path: target/Cucumber.json
+          path: target/cucumber.json
           if-no-files-found: warn
           compression-level: 6
           overwrite: false
