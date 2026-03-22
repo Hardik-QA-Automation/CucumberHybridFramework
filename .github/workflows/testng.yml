@@ -63,3 +63,8 @@ jobs:
           else
             echo "JSON NOT found"
           fi
+
+      - name: Debug JSON
+        run: |
+          echo "Searching for cucumber.json..."
+          find . -name "cucumber.json"
