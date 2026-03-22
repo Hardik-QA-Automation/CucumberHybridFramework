@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import org.junit.Assert;
+import org.testng.Assert;
 import org.openqa.selenium.WebDriver;
 
 import factory.DriverFactory;
@@ -51,7 +51,7 @@ public class Login {
 	@Then("User should get successfully logged in")
 	public void user_should_get_successfully_logged_in() {
 
-		Assert.assertTrue("Login passed: Account page is displayed",accountPage.displayStatusOfEditYourAccountInformationOption());
+		Assert.assertTrue(accountPage.displayStatusOfEditYourAccountInformationOption());
 
 	}
 
