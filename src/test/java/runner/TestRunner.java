@@ -11,7 +11,8 @@ import org.testng.annotations.DataProvider;
                 "json:target/cucumber.json",
                 "html:target/cucumber-reports.html"
         },
-        monochrome = true
+        monochrome = true,
+        publish = false
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 	 public TestRunner() {

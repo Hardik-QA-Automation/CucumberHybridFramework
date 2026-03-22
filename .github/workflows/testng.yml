@@ -68,3 +68,6 @@ jobs:
         run: |
           echo "Searching for cucumber.json..."
           find . -name "cucumber.json"
+
+      - name: Run Tests
+        run: mvn clean verify -Dcucumber.plugin="json:target/cucumber.json"
