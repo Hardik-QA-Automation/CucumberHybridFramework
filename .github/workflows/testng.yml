@@ -54,3 +54,12 @@ jobs:
       
       - name: Check test reports
         run: ls -R target || true
+
+      - name: Check JSON existence
+        run: |
+          echo "Checking cucumber.json..."
+          if [ -f target/cucumber.json ]; then
+            echo "JSON exists"
+          else
+            echo "JSON NOT found"
+          fi
