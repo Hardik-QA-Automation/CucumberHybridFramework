@@ -14,26 +14,42 @@ import utils.ConfigReader;
 
 public class MyHooks {
 
-	WebDriver driver;
-
 	@Before
 	public void setup() {
+		new ConfigReader();
+		Properties prop = ConfigReader.initializeProperties();
 
-		Properties prop = new ConfigReader().initializeProperties();
-		driver = DriverFactory.initializeBrowser(prop.getProperty("browser"));
-		driver.get(prop.getProperty("url"));
+		String browser = prop.getProperty("browser");
+		String url = prop.getProperty("url");
+
+		// Initialize driver
+		WebDriver driver = DriverFactory.initializeBrowser(browser);
+
+		if (driver == null) {
+			throw new RuntimeException("WebDriver initialization failed for browser: " + browser);
+		}
+		// Navigate to URL
+		driver.get(url);
 	}
 
 	@After
 	public void tearDown(Scenario scenario) {
 
-		String scenarioName = scenario.getName().replaceAll(" ", "_");
-
-		byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-		scenario.attach(screenshot, "image/png", scenarioName);
-
-		driver.quit();
-
+		WebDriver driver = DriverFactory.getDriver(); // Always get from factory
+		if (driver != null) {
+			try {
+				// Take screenshot only if scenario failed
+				if (scenario.isFailed()) {
+					byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+					scenario.attach(screenshot, "image/png", scenario.getName().replaceAll(" ", "_"));
+				}
+			} catch (Exception e) {
+				System.out.println("Screenshot failed: " + e.getMessage());
+			} finally {
+				DriverFactory.quitDriver(); // clean shutdown
+			}
+		} else {
+			System.out.println("Driver is null in tearDown()");
+		}
 	}
-
 }

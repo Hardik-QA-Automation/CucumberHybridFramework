@@ -10,7 +10,7 @@ import utils.ElementUtils;
 
 public class LoginPage {
 
-	WebDriver driver;
+	private WebDriver driver;
 	ElementUtils elementUtils;
 
 	public LoginPage(WebDriver driver) {
@@ -30,7 +30,7 @@ public class LoginPage {
 	private WebElement loginButton;
 
 	@FindBy(xpath = "//div[contains(@class, 'alert-dismissible')]")
-	private WebElement WarningMessage;
+	private WebElement warningMessage;
 
 	public void enterEmailAddress(String email) {
 		elementUtils.typeTextIntoElement(emailField, email, CommonUtils.EXPLICIT_WAIT_BASIC_TIME);
@@ -46,7 +46,7 @@ public class LoginPage {
 	}
 
 	public String getWarningMessage() {
-		return elementUtils.getTextFromElement(WarningMessage, CommonUtils.EXPLICIT_WAIT_BASIC_TIME);
+		return elementUtils.getTextFromElement(warningMessage, CommonUtils.EXPLICIT_WAIT_BASIC_TIME);
 	}
 
 }

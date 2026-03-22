@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ElementUtils {
 
-	WebDriver driver;
+	private WebDriver driver;
 
 	public ElementUtils(WebDriver driver) {
 		this.driver = driver;
@@ -88,7 +88,7 @@ public class ElementUtils {
 
 	// mouse hover and click on the element using Action class:
 
-	public void mounseHoverAndClick(WebElement element, long durationInSeconds) {
+	public void mouseHoverAndClick(WebElement element, long durationInSeconds) {
 
 		WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
 
@@ -140,8 +140,8 @@ public class ElementUtils {
 		
 		try {
 		WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
-		return webElement.isDisplayed();
-		} catch (Throwable e) {
+			return webElement.isDisplayed();
+		} catch (Exception e) {
 			return false;
 		}
 	}

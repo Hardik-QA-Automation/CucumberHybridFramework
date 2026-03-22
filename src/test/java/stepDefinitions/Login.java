@@ -17,7 +17,7 @@ public class Login {
 	WebDriver driver;
 	private LoginPage loginPage;
 	private AccountPage accountPage;
-	private CommonUtils commonUtils = new CommonUtils();;
+	private CommonUtils commonUtils = new CommonUtils();
 
 	@Given("User has navigated to login page")
 	public void user_has_navigated_to_login_page() {
@@ -51,7 +51,7 @@ public class Login {
 	@Then("User should get successfully logged in")
 	public void user_should_get_successfully_logged_in() {
 
-		Assert.assertTrue(accountPage.displayStatusOfEditYourAccountInformationOption());
+		Assert.assertTrue("Login passed: Account page is displayed",accountPage.displayStatusOfEditYourAccountInformationOption());
 
 	}
 
